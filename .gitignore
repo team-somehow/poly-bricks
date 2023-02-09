@@ -1,0 +1,5 @@
+.DS_Stores
+node_modules/
+.env
+*.cache
+.firebase
