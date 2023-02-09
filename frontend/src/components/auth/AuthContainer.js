@@ -5,29 +5,37 @@ import { auth, Providers } from "../../config/firebase";
 import { Button, Typography } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import Center from "../utils/Center";
+import { Auth, useAuth } from "@arcana/auth-react";
 
 const AuthContainer = (props) => {
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [disabled, setDisabled] = useState(false);
+	const navigate = useNavigate();
+	const [errorMessage, setErrorMessage] = useState("");
+	const [disabled, setDisabled] = useState(false);
 
-  const signInWithGoogle = () => {
-    setDisabled(true);
-    signInWithPopup(auth, Providers.google)
-      .then(() => {
-        setDisabled(false);
-        console.info("TODO: navigate to authenticated screen");
-        navigate("/");
-      })
-      .catch((error) => {
-        setErrorMessage(error.code + ": " + error.message);
-        setDisabled(false);
-      });
-  };
+	const signInWithGoogle = () => {
+		setDisabled(true);
+		signInWithPopup(auth, Providers.google)
+			.then(() => {
+				setDisabled(false);
+				console.info("TODO: navigate to authenticated screen");
+				navigate("/");
+			})
+			.catch((error) => {
+				setErrorMessage(error.code + ": " + error.message);
+				setDisabled(false);
+			});
+	};
 
-  return (
-    <Center height={"auto"}>
-      <Button
+	return (
+		<Center height={"auto"}>
+			<Auth
+				externalWallet={true}
+				theme="dark"
+				onLogin={() => navigate("/")}
+        
+			></Auth>
+			{/* <Button
+
         startIcon={<GoogleIcon />}
         size="large"
         disabled={disabled}
@@ -38,9 +46,9 @@ const AuthContainer = (props) => {
       </Button>
       <Typography sx={{ mt: 2 }} color={"red"}>
         {errorMessage}
-      </Typography>
-    </Center>
-  );
+      </Typography> */}
+		</Center>
+	);
 };
 
 export default AuthContainer;
