@@ -4,16 +4,18 @@ import { auth } from "../../config/firebase";
 import { Auth, useAuth } from "@arcana/auth-react";
 
 const AuthChecker = ({ children }) => {
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
-	const auth = useAuth();
-	useEffect(() => {
-		if (!auth.isLoggedIn) {
-			navigate("/login");
-		}
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const auth = useAuth();
+    useEffect(() => {
+        console.log("I am fool");
+        console.log(auth.isLoggedIn);
+        if (!auth.isLoggedIn) {
+            navigate("/login");
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	return <>{children}</>;
+    return <>{children}</>;
 };
 
 export default AuthChecker;
