@@ -1,7 +1,7 @@
 import lottie from "lottie-web";
 import React, { useEffect, useRef } from "react";
 
-const CustomLottie = ({ path }) => {
+const MeraLottie = ({ path }) => {
     const animationRef = useRef(null);
 
     useEffect(() => {
@@ -18,4 +18,4 @@ const CustomLottie = ({ path }) => {
     return <div ref={animationRef} />;
 };
 
-export default CustomLottie;
+export default MeraLottie;
