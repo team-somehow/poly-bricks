@@ -29,10 +29,10 @@ const AuthContainer = (props) => {
 	return (
 		<Center height={"auto"}>
 			<Auth
-				externalWallet={true}
+				// externalWallet={true}
 				theme="dark"
 				onLogin={() => navigate("/")}
-        
+				
 			></Auth>
 			{/* <Button
 

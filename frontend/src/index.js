@@ -10,11 +10,9 @@ const appID = "15228f3413342e43873a94d2ce54df3bb36b39f2";
 const provider = new AuthProvider(appID);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-	<React.StrictMode>
 		<ProvideAuth provider={provider}>
 			<App />
 		</ProvideAuth>
-	</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
