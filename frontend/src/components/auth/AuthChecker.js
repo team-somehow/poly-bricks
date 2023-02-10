@@ -8,8 +8,7 @@ const AuthChecker = ({ children }) => {
 
     const auth = useAuth();
     useEffect(() => {
-        console.log("I am fool");
-        console.log(auth.isLoggedIn);
+        console.log(auth.user);
         if (!auth.isLoggedIn) {
             navigate("/login");
         }
