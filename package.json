@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "aos": "^2.3.4",
+    "lottie-web": "^5.10.2"
+  }
+}

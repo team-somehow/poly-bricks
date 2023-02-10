@@ -8,23 +8,23 @@ import Center from "../utils/Center";
 import { Auth, useAuth } from "@arcana/auth-react";
 
 const AuthContainer = (props) => {
-	const navigate = useNavigate();
-	const [errorMessage, setErrorMessage] = useState("");
-	const [disabled, setDisabled] = useState(false);
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [disabled, setDisabled] = useState(false);
 
-	const signInWithGoogle = () => {
-		setDisabled(true);
-		signInWithPopup(auth, Providers.google)
-			.then(() => {
-				setDisabled(false);
-				console.info("TODO: navigate to authenticated screen");
-				navigate("/");
-			})
-			.catch((error) => {
-				setErrorMessage(error.code + ": " + error.message);
-				setDisabled(false);
-			});
-	};
+    const signInWithGoogle = () => {
+        setDisabled(true);
+        signInWithPopup(auth, Providers.google)
+            .then(() => {
+                setDisabled(false);
+                console.info("TODO: navigate to authenticated screen");
+                navigate("/");
+            })
+            .catch((error) => {
+                setErrorMessage(error.code + ": " + error.message);
+                setDisabled(false);
+            });
+    };
 
 	return (
 		<Center height={"auto"}>
@@ -47,8 +47,8 @@ const AuthContainer = (props) => {
       <Typography sx={{ mt: 2 }} color={"red"}>
         {errorMessage}
       </Typography> */}
-		</Center>
-	);
+        </Center>
+    );
 };
 
 export default AuthContainer;
