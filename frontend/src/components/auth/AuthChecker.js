@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../config/firebase";
-import { Auth, useAuth } from "@arcana/auth-react";
+import { useAuth } from "@arcana/auth-react";
 
 const AuthChecker = ({ children }) => {
     const navigate = useNavigate();
-
     const auth = useAuth();
+
     useEffect(() => {
-        console.log(auth.user);
-        if (!auth.isLoggedIn) {
-            navigate("/login");
+        if (!auth.isLoggedIn && !auth.loading) {
+            // navigate("/login");
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [auth, navigate]);
 
     return <>{children}</>;
 };
