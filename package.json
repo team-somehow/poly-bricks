@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "aos": "^2.3.4",
-    "lottie-web": "^5.10.2"
+    "lottie-web": "^5.10.2",
+    "notistack": "^2.0.8"
   }
 }
