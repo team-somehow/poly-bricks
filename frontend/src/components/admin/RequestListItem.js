@@ -11,16 +11,16 @@ import { contractAddress } from "../../constants";
 import PolyBricks from "../../artifacts/contracts/PolyBricks.sol/PolyBricks.json";
 import { pinFileToIPFS } from "../../utils/pinFileToIPFS";
 import CustomizedDialogs from "./DialogBox";
-
-const provider = new providers.Web3Provider(window.ethereum);
-// get the end user
-const signer = provider.getSigner();
-// get the smart contract
-const contract = new Contract(contractAddress, PolyBricks.abi, signer);
+import { arcanaProvider } from "../../index";
 
 const RequestListItem = (props) => {
+    const provider = new providers.Web3Provider(arcanaProvider.provider);
+    // get the end user
+    const signer = provider.getSigner();
+    // get the smart contract
+    const contract = new Contract(contractAddress, PolyBricks.abi, signer);
     const [expand, setExpand] = useState(false);
-    const { enqueueSnackbar } = useSnackbar();
+    // const { enqueueSnackbar } = useSnackbar();
     const [item, _setItem] = useState(props);
     const [completed, setCompleted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -53,8 +53,8 @@ const RequestListItem = (props) => {
 
             setStepCount((prev) => prev + 1);
 
-            if (window.ethereum) {
-                await window.ethereum.enable();
+            if (arcanaProvider.provider.connected) {
+                await arcanaProvider.connect();
 
                 const ipfsHash = pinataResponse.data.IpfsHash;
 

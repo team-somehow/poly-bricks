@@ -7,7 +7,7 @@ import { AuthProvider, CHAIN } from "@arcana/auth";
 import { ProvideAuth } from "@arcana/auth-react";
 
 const appID = "15228f3413342e43873a94d2ce54df3bb36b39f2";
-const provider = new AuthProvider(appID, {
+const arcanaProvider = new AuthProvider(appID, {
     network: "testnet", //defaults to 'testnet'
     position: "right", //defaults to right
     theme: "dark", //defaults to dark
@@ -19,11 +19,11 @@ const provider = new AuthProvider(appID, {
 });
 
 export {
-    provider
+    arcanaProvider
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <ProvideAuth provider={provider}>
+    <ProvideAuth provider={arcanaProvider}>
         <App />
     </ProvideAuth>
 );

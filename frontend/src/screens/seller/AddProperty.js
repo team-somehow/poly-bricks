@@ -24,7 +24,7 @@ import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
 import { AuthProvider, CHAIN } from "@arcana/auth";
 
-import { provider } from "../../index";
+import { arcanaProvider as provider } from "../../index";
 import { useAuth } from "@arcana/auth-react";
 const storage = getStorage();
 const filter = createFilterOptions();
