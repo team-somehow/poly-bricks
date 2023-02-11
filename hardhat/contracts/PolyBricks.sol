@@ -132,7 +132,7 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
     // RENT 
 
     // record deposit and monthly rent given by seller
-    function listPropertyForRent(uint256 tokenId, uint256 _depositAmount, uint256 _monthlyRentAmount) {
+    function listPropertyForRent(uint256 tokenId, uint256 _depositAmount, uint256 _monthlyRentAmount) public {
         require(_isApprovedOrOwner(msg.sender, tokenId), "only owner of NFT can list property for rent");
         depositAmount[tokenId] = _depositAmount;
         monthlyRentAmount[tokenId] = _monthlyRentAmount;
@@ -143,7 +143,7 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
     function buyerPayRentAndDeposit(uint256 tokenId, address payable userPayableAddress) public payable {
         require( msg.value >= depositAmount[tokenId] + monthlyRentAmount[tokenId], "please deposit correct amount");
 
-        tokenIdToRenterPayableAddress[msg.sender] = userPayableAddress;
+        tokenIdToRenterPayableAddress[tokenId] = userPayableAddress;
     }
 
     
