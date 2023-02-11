@@ -6,10 +6,12 @@ import { db, auth } from "../../config/firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import SearchInput from "../../components/property/SearchInput";
+import { useAuth } from "@arcana/auth-react";
 
 const Properties = () => {
     const [data, setData] = useState([]);
     const [tempData, setTempData] = useState([]);
+    const auth=useAuth()
 
     useEffect(() => {
         const getProperties = async () => {
@@ -22,7 +24,7 @@ const Properties = () => {
                     temp.authorize !== false &&
                     temp.authorizeToSell !== false &&
                     temp.alreadySold !== true &&
-                    temp.ownerId != auth.currentUser.id
+                    temp.ownerId !== auth.user.publicKey
                 ) {
                     tData.push({ ...doc.data(), id: doc.id });
                 }
@@ -31,7 +33,7 @@ const Properties = () => {
             setTempData(tData);
         };
         getProperties();
-    }, []);
+    }, [auth]);
     const updateProperties = (e) => {
         const searchQuery = e.target.value;
         if (searchQuery.trim().length == 0) setData(tempData);

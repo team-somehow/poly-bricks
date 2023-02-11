@@ -2,23 +2,25 @@ import React, { useRef, useState, useEffect } from "react";
 
 import { Box, Typography, Paper } from "@mui/material";
 import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
+import { db } from "../../config/firebase";
 import ListingSellerItem from "../../components/property/ListingSellerItem";
 import CustomizedDialogs from "../../components/admin/DialogBox";
+import { useAuth } from "@arcana/auth-react";
 
 function SellerPropertyDetails() {
     const [data, setData] = useState([]);
+    const auth = useAuth();
 
     useEffect(() => {
         const getProperties = async () => {
             const snapshot = await getDocs(collection(db, "ListedProperties"));
             let tData = [];
-            snapshot.forEach((doc) => {
+            snapshot.forEach(async (doc) => {
                 // console.log(doc.id, " => ", doc.data());
                 let temp = doc.data();
                 // console.log(temp.ownerId,auth.currentUser.uid)
 
-                if (temp.ownerId === auth.currentUser.uid) {
+                if (temp.ownerId === auth.user.publicKey) {
                     tData.push({ ...doc.data(), id: doc.id });
                 }
             });
@@ -26,7 +28,7 @@ function SellerPropertyDetails() {
             console.log(tData);
         };
         getProperties();
-    }, []);
+    }, [auth]);
 
     return (
         <Box m={5} width={"100%"}>

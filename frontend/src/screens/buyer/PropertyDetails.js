@@ -11,6 +11,7 @@ import PolyBricks from "../../artifacts/contracts/PolyBricks.sol/PolyBricks.json
 import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 import { useSnackbar } from "notistack";
+import { useAuth } from "@arcana/auth-react";
 
 const provider = new providers.Web3Provider(window.ethereum);
 // get the end user
@@ -19,6 +20,7 @@ const signer = provider.getSigner();
 const contract = new Contract(contractAddress, PolyBricks.abi, signer);
 
 const PropertyDetails = () => {
+    const auth=useAuth();
     const { propertyID } = useParams();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
@@ -63,11 +65,11 @@ const PropertyDetails = () => {
 
         if (!purchaseRequests) return;
         purchaseRequests.forEach((request) => {
-            if (request.uid === auth.currentUser.uid) {
+            if (request.uid === auth.user.publicKey) {
                 setAllowRequestPurchase(false);
             }
         });
-    }, [purchaseRequests]);
+    }, [purchaseRequests,auth]);
 
     const makeDeposit = async () => {
         const tokenId = data.tokenID;
@@ -101,8 +103,8 @@ const PropertyDetails = () => {
 
                 await updateDoc(propertyRef, {
                     purchaseRequests: arrayUnion({
-                        name: auth.currentUser.displayName,
-                        uid: auth.currentUser.uid,
+                        name: auth.user.picture,
+                        uid: auth.user.publicKey,
                         walletAddress: walletAddress,
                         approved: false,
                     }),
@@ -199,13 +201,13 @@ const PropertyDetails = () => {
                             Matic.{price}
                         </Typography>
                         <Box>
-                            {ownerId === auth.currentUser.uid && (
+                            {ownerId === auth.user.publicKey && (
                                 <Typography>
                                     You already own this property
                                 </Typography>
                             )}
 
-                            {ownerId !== auth.currentUser.uid &&
+                            {ownerId !== auth.user.publicKey &&
                                 allowRequestPurchase && (
                                     <Button
                                         variant="contained"

@@ -68,7 +68,6 @@ const MenuProps = {
 
 const AddProperty = () => {
     const auth = useAuth();
-    console.log(auth.user);
 
     const navigate = useNavigate();
 
@@ -227,7 +226,7 @@ const AddProperty = () => {
             setConnected(true);
             setWalletAddress(accounts[0]);
 
-            console.log(accounts);
+
         } catch {
             console.log("error");
         }

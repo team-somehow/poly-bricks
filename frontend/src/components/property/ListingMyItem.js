@@ -9,6 +9,7 @@ import { providers, Contract, utils } from "ethers";
 import { contractAddress } from "../../constants";
 import PolyBricks from "../../artifacts/contracts/PolyBricks.sol/PolyBricks.json";
 import { doc, updateDoc } from "firebase/firestore";
+import { useAuth } from "@arcana/auth-react";
 
 const provider = new providers.Web3Provider(window.ethereum);
 // get the end user
@@ -18,6 +19,8 @@ const contract = new Contract(contractAddress, PolyBricks.abi, signer);
 
 const ListingItem = (props) => {
     // const navigate = useNavigate();
+    const auth=useAuth()
+
     const {
         name,
         images,
@@ -58,7 +61,7 @@ const ListingItem = (props) => {
             const propertyRef = doc(db, "ListedProperties", id);
 
             await updateDoc(propertyRef, {
-                ownerId: auth.currentUser.uid,
+                ownerId: auth.user.publicKey,
                 purchaseRequests: [],
                 authorizeToSell: false,
             });
@@ -126,7 +129,7 @@ const ListingItem = (props) => {
                 m={1}
             >
                 {
-                    (auth.currentUser.uid !== ownerId,
+                    (auth.user.publicKey !== ownerId,
                     price,
                     downPaymentPrice && (
                         <>
@@ -149,9 +152,9 @@ const ListingItem = (props) => {
                                     disableFocusRipple={true}
                                     size="large"
                                     fullWidth
-                                    disabled={auth.currentUser.uid === ownerId}
+                                    disabled={auth.user.publicKey === ownerId}
                                 >
-                                    {auth.currentUser.uid !== ownerId
+                                    {auth.user.publicKey !== ownerId
                                         ? `Waiting For Approval`
                                         : `You own the property`}
                                 </Button>
@@ -160,7 +163,7 @@ const ListingItem = (props) => {
                     ))
                 }
                 <Box>
-                    {!paymentMade && auth.currentUser.uid !== ownerId && (
+                    {!paymentMade && auth.user.publicKey !== ownerId && (
                         <>
                             {maiKhareedSakta && (
                                 <Button
