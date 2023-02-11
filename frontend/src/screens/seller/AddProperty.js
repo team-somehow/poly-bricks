@@ -24,10 +24,10 @@ import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
 import { AuthProvider, CHAIN } from "@arcana/auth";
 
-import { provider }  from "../../index";
+import { provider } from "../../index";
+import { useAuth } from "@arcana/auth-react";
 const storage = getStorage();
 const filter = createFilterOptions();
-
 
 // const appID = "15228f3413342e43873a94d2ce54df3bb36b39f2";
 // const auth = new AuthProvider(appID, {
@@ -40,8 +40,6 @@ const filter = createFilterOptions();
 //         rpcUrl: "https://polygon-rpc.com", //defaults to 'https://rpc.ankr.com/eth'
 //     },
 // });
-
-
 
 const names = [
     "football",
@@ -69,10 +67,8 @@ const MenuProps = {
 };
 
 const AddProperty = () => {
-
-
-   
-
+    const auth = useAuth();
+    console.log(auth.user);
 
     const navigate = useNavigate();
 
@@ -168,7 +164,7 @@ const AddProperty = () => {
                     verified: false,
                 },
                 images: [imageurl],
-                // ownerId: auth.currentUser.uid,
+                ownerId: auth.user.publicKey,
                 authorize: false,
                 sellerWalletAddress: walletAddress,
                 authorizeToSell: false,
@@ -211,7 +207,7 @@ const AddProperty = () => {
         }
         setLoading(false);
     };
-    const handleConnect = async() => {
+    const handleConnect = async () => {
         // window.ethereum
         //     .request({ method: "eth_requestAccounts" })
         //     .then((res) => {
@@ -221,19 +217,19 @@ const AddProperty = () => {
         //         setWalletAddress(res[0]);
         //     });
 
-        try{
+        try {
+            await provider.init();
+            await provider.connect();
+            const accounts = await provider.provider.request({
+                method: "eth_accounts",
+            });
+            setWalletConnected(true);
+            setConnected(true);
+            setWalletAddress(accounts[0]);
 
-            await provider.init()
-            await provider.connect()
-            const accounts=await provider.provider.request({method:'eth_accounts'})
-            setWalletConnected(true)
-            setConnected(true)
-            setWalletAddress(accounts[0])
-    
-            console.log(accounts)
-        }
-        catch{
-            console.log("error")
+            console.log(accounts);
+        } catch {
+            console.log("error");
         }
     };
 
@@ -259,9 +255,7 @@ const AddProperty = () => {
                 }}
                 // className="awesome-bg-0"
             >
-                <Typography variant="h4">
-                    List A Property
-                </Typography>
+                <Typography variant="h4">List A Property</Typography>
             </Box>
             <Box p={5} display="flex" mt={"10vh"}>
                 <Box width={"100%"} mr={10}>
