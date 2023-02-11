@@ -10,16 +10,17 @@ import { contractAddress } from "../../constants";
 import PolyBricks from "../../artifacts/contracts/PolyBricks.sol/PolyBricks.json";
 import { doc, updateDoc } from "firebase/firestore";
 import { useAuth } from "@arcana/auth-react";
-
-const provider = new providers.Web3Provider(window.ethereum);
-// get the end user
-const signer = provider.getSigner();
-// get the smart contract
-const contract = new Contract(contractAddress, PolyBricks.abi, signer);
+import { arcanaProvider } from "../../index";
 
 const ListingItem = (props) => {
     // const navigate = useNavigate();
-    const auth=useAuth()
+
+    const provider = new providers.Web3Provider(arcanaProvider.provider);
+    // get the end user
+    const signer = provider.getSigner();
+    // get the smart contract
+    const contract = new Contract(contractAddress, PolyBricks.abi, signer);
+    const auth = useAuth();
 
     const {
         name,
@@ -39,9 +40,8 @@ const ListingItem = (props) => {
         const remainingAmountFromFb = price - downPaymentPrice;
         const tokenIdOfThisProperty = tokenID;
         console.log(price, downPaymentPrice);
-        if (window.ethereum) {
-            await window.ethereum.enable();
-
+        await arcanaProvider.connect();
+        if (arcanaProvider.provider.connected) {
             const amountInWei = utils.parseUnits(
                 remainingAmountFromFb.toString(),
                 18

@@ -21,6 +21,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import Wallet from "../../components/admin/Wallet.png";
 import { useNavigate } from "react-router-dom";
+import { arcanaProvider as provider } from "../..";
 
 function Admin() {
     const [data, setData] = useState([]);
@@ -32,12 +33,14 @@ function Admin() {
     useEffect(() => {
         handleConnect();
     }, []);
-    const handleConnect = () => {
-        window.ethereum
-            .request({ method: "eth_requestAccounts" })
-            .then((res) => {
-                setWalletAddress(res[0]);
+    const handleConnect =async () => {
+        
+            await provider.init();
+            await provider.connect();
+            const accounts = await provider.provider.request({
+                method: "eth_accounts",
             });
+            setWalletAddress(accounts[0]);
     };
 
     useEffect(() => {

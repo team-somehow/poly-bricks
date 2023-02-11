@@ -18,14 +18,14 @@ import CustomizedDialogs from "../admin/DialogBox";
 
 import { db } from "../../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-
-const provider = new providers.Web3Provider(window.ethereum);
-// get the end user
-const signer = provider.getSigner();
-// get the smart contract
-const contract = new Contract(contractAddress, PolyBricks.abi, signer);
+import { arcanaProvider } from "../../index";
 
 const ListingSellerItem = (props) => {
+    const provider = new providers.Web3Provider(arcanaProvider.provider);
+    // get the end user
+    const signer = provider.getSigner();
+    // get the smart contract
+    const contract = new Contract(contractAddress, PolyBricks.abi, signer);
     const [stepCount, setStepCount] = useState(0);
     const [open, setOpen] = useState(false);
     const [err, setErr] = useState(null);
@@ -64,9 +64,8 @@ const ListingSellerItem = (props) => {
 
         // get these values from firebase
         const tokenIdOfThisProperty = tokenID;
-
-        if (window.ethereum) {
-            await window.ethereum.enable();
+        await arcanaProvider.connect();
+        if (arcanaProvider.provider.connected) {
             console.log(contract);
             setStepCount((prev) => prev + 1);
 
@@ -96,8 +95,8 @@ const ListingSellerItem = (props) => {
     const sell = async (buyerAddress, buyerUid) => {
         setOpen1(true);
 
-        if (window.ethereum) {
-            await window.ethereum.enable();
+        await arcanaProvider.connect();
+        if (arcanaProvider.provider.connected) {
             // call the pay to mint method on the smart contract
             setStepCount1((prev) => prev + 1);
 

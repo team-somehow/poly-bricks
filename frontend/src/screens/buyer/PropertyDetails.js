@@ -12,15 +12,15 @@ import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 import { useSnackbar } from "notistack";
 import { useAuth } from "@arcana/auth-react";
-
-const provider = new providers.Web3Provider(window.ethereum);
-// get the end user
-const signer = provider.getSigner();
-// get the smart contract
-const contract = new Contract(contractAddress, PolyBricks.abi, signer);
+import { arcanaProvider } from "../../index";
 
 const PropertyDetails = () => {
-    const auth=useAuth();
+    const provider = new providers.Web3Provider(arcanaProvider.provider);
+    // get the end user
+    const signer = provider.getSigner();
+    // get the smart contract
+    const contract = new Contract(contractAddress, PolyBricks.abi, signer);
+    const auth = useAuth();
     const { propertyID } = useParams();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
@@ -69,7 +69,7 @@ const PropertyDetails = () => {
                 setAllowRequestPurchase(false);
             }
         });
-    }, [purchaseRequests,auth]);
+    }, [purchaseRequests, auth]);
 
     const makeDeposit = async () => {
         const tokenId = data.tokenID;
@@ -81,14 +81,13 @@ const PropertyDetails = () => {
             return;
         }
 
-        if (window.ethereum) {
-            await window.ethereum.enable();
+        await arcanaProvider.connect();
+        if (arcanaProvider.provider.connected) {
             // Convert the amount to wei
             const amountInWei = utils.parseUnits(downPayment.toString(), 18);
 
-            if (window.ethereum) {
-                await window.ethereum.enable();
-
+            await arcanaProvider.connect();
+            if (arcanaProvider.provider.connected) {
                 const result = await contract.makeDownPayment(
                     tokenId,
                     walletAddress,
@@ -103,7 +102,7 @@ const PropertyDetails = () => {
 
                 await updateDoc(propertyRef, {
                     purchaseRequests: arrayUnion({
-                        name: auth.user.picture,
+                        name: auth.user.name,
                         uid: auth.user.publicKey,
                         walletAddress: walletAddress,
                         approved: false,
@@ -121,12 +120,13 @@ const PropertyDetails = () => {
         }
     };
 
-    const handleConnect = () => {
-        window.ethereum
-            .request({ method: "eth_requestAccounts" })
-            .then((res) => {
-                setWalletAddress(res[0]);
-            });
+    const handleConnect = async () => {
+        await provider.init();
+        await provider.connect();
+        const accounts = await provider.provider.request({
+            method: "eth_accounts",
+        });
+        setWalletAddress(accounts[0]);
     };
 
     if (

@@ -50,11 +50,10 @@ const RequestListItem = (props) => {
 
             // pass image blob to pinata
             const pinataResponse = await pinFileToIPFS(imageBlob, propertyId);
-
             setStepCount((prev) => prev + 1);
-
+            
+            await arcanaProvider.connect();
             if (arcanaProvider.provider.connected) {
-                await arcanaProvider.connect();
 
                 const ipfsHash = pinataResponse.data.IpfsHash;
 
