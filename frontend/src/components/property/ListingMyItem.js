@@ -64,6 +64,7 @@ const ListingItem = (props) => {
                 ownerId: auth.user.publicKey,
                 purchaseRequests: [],
                 authorizeToSell: false,
+                sellerWalletAddress: auth.user.address,
             });
 
             setPaymentMade(true);

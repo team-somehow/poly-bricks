@@ -308,13 +308,7 @@ const AddProperty = () => {
                             onChange={(e) => setAddress(e.target.value)}
                             required
                         />
-                        <ToggleButtonGroup
-                            value={option}
-                            onChange={(e) => setOption(e.target.value)}
-                        >
-                            <ToggleButton value="Sell">Sell</ToggleButton>
-                            <ToggleButton value="Rent">Rent</ToggleButton>
-                        </ToggleButtonGroup>
+                        
 
                         <div
                             style={{

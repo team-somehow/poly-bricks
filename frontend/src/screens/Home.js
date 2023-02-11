@@ -8,16 +8,11 @@ import SpecialSection from "../components/Home/SpecialSection";
 import { useAuth } from "@arcana/auth-react";
 import { useEffect } from "react";
 
-
 const Home = (props) => {
-  useEffect(() => {
-    
-    
-
-
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  let auth=useAuth();
-  console.log(auth.user)
+    // let auth = useAuth();
+    // useEffect(() => {
+    //     console.log(auth.user);
+    // }, [auth]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>

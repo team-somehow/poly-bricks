@@ -5,6 +5,8 @@ import {
     Grid,
     Paper,
     TextField,
+    ToggleButton,
+    ToggleButtonGroup,
     Typography,
 } from "@mui/material";
 import { Contract, ethers, providers } from "ethers";
@@ -45,10 +47,9 @@ const ListingSellerItem = (props) => {
         authorizeToSell,
         authorize,
         alreadySold,
-        type,
     } = props;
     const navigate = useNavigate();
-
+    const [type, setType] = useState("Sell");
     const [token, setToken] = useState(0.001);
     const [price, setPrice] = useState(0.01);
     const [authorizeToSellState, setAuthorizeToSellState] =
@@ -81,6 +82,7 @@ const ListingSellerItem = (props) => {
             downPaymentPrice: token,
             price: price,
             alreadySold: false,
+            type: type,
         });
         setAuthorizeToSellState(true);
         setStepCount((prev) => prev + 1);
@@ -117,10 +119,18 @@ const ListingSellerItem = (props) => {
                 downPaymentPrice: token,
                 price: price,
                 alreadySold: false,
+                type: type,
             });
             setAuthorizeToSellState(true);
             setStepCount((prev) => prev + 1);
         }
+    };
+
+    const rent = async (buyerAddress, buyerUid) => {
+        // setOpen1(true)
+        // await arcanaProvider.connect();
+        // if(arcanaProvider.provider.connected){
+        // }
     };
 
     const sell = async (buyerAddress, buyerUid) => {
@@ -282,10 +292,17 @@ const ListingSellerItem = (props) => {
                                             <Typography>{item.name}</Typography>
                                             <Button
                                                 onClick={() => {
-                                                    sell(
-                                                        item.walletAddress,
-                                                        item.uid
-                                                    );
+                                                    if (type === "Sell") {
+                                                        sell(
+                                                            item.walletAddress,
+                                                            item.uid
+                                                        );
+                                                    } else {
+                                                        rent(
+                                                            item.walletAddress,
+                                                            item.uid
+                                                        );
+                                                    }
                                                 }}
                                                 variant="contained"
                                             >
@@ -310,6 +327,13 @@ const ListingSellerItem = (props) => {
                                 textAlign: "left",
                             }}
                         >
+                            <ToggleButtonGroup
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
+                            >
+                                <ToggleButton value="Sell">Sell</ToggleButton>
+                                <ToggleButton value="Rent">Rent</ToggleButton>
+                            </ToggleButtonGroup>
                             <TextField
                                 value={token}
                                 onChange={(e) => setToken(e.target.value)}
