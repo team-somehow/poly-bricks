@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
 import routes from "./config/routes";
 import Center from "./components/utils/Center";
 import AuthChecker from "./components/auth/AuthChecker";
@@ -28,25 +28,7 @@ function App() {
 
     return (
         <div>
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
-                <Routes>
-                    {routes.map((route, index) => (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            element={
-                                route.protected ? (
-                                    <AuthChecker>
-                                        <route.component />
-                                    </AuthChecker>
-                                ) : (
-                                    <route.component />
-                                )
-                            }
-                        />
-                    ))}
-                </Routes>
-            </BrowserRouter>
+           <RouterProvider router={routes}/>
         </div>
     );
 }
