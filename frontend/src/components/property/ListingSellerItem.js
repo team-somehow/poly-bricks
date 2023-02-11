@@ -17,7 +17,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CustomizedDialogs from "../admin/DialogBox";
 
 import { db } from "../../config/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import { arcanaProvider } from "../../index";
 
 const ListingSellerItem = (props) => {
@@ -45,6 +45,7 @@ const ListingSellerItem = (props) => {
         authorizeToSell,
         authorize,
         alreadySold,
+        type,
     } = props;
     const navigate = useNavigate();
 
@@ -54,6 +55,36 @@ const ListingSellerItem = (props) => {
         useState(authorizeToSell);
 
     const [showPurchaseRequests, setShowPurchaseRequests] = useState(true);
+
+    const listPropertyForRent = async () => {
+        setOpen(true);
+        const monthly = ethers.utils.parseUnits(token.toString(), 18);
+        const deposit = ethers.utils.parseUnits(price.toString(), 18);
+        const tokenIdOfThisProperty = tokenID;
+        await arcanaProvider.connect();
+
+        console.log(monthly, deposit);
+
+        setStepCount((prev) => prev + 1);
+        const result = await contract.listPropertyForRent(
+            tokenIdOfThisProperty,
+            deposit,
+            monthly
+        );
+        result.wait();
+
+        console.log("result", result);
+        const propertyRef = doc(db, "ListedProperties", id);
+
+        await updateDoc(propertyRef, {
+            authorizeToSell: true,
+            downPaymentPrice: token,
+            price: price,
+            alreadySold: false,
+        });
+        setAuthorizeToSellState(true);
+        setStepCount((prev) => prev + 1);
+    };
 
     const listPropertyForSale = async () => {
         setOpen(true);
@@ -282,7 +313,9 @@ const ListingSellerItem = (props) => {
                             <TextField
                                 value={token}
                                 onChange={(e) => setToken(e.target.value)}
-                                label="Token Amount"
+                                label={`${
+                                    type === "sell" ? "Monthly Rent" : "Token"
+                                }`}
                                 sx={{
                                     marginBottom: "14px",
                                 }}
@@ -292,7 +325,11 @@ const ListingSellerItem = (props) => {
                             <TextField
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
-                                label="Selling Price"
+                                label={`${
+                                    type === "sell"
+                                        ? "Deposit"
+                                        : "Selling Price"
+                                }`}
                                 sx={{
                                     marginBottom: "20px",
                                 }}
@@ -306,7 +343,11 @@ const ListingSellerItem = (props) => {
                             <Button
                                 variant="contained"
                                 size="large"
-                                onClick={listPropertyForSale}
+                                onClick={
+                                    type === "Sell"
+                                        ? listPropertyForSale
+                                        : listPropertyForRent
+                                }
                             >
                                 List Property
                             </Button>

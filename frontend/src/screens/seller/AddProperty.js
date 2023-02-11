@@ -5,6 +5,8 @@ import {
     Grid,
     Paper,
     TextField,
+    ToggleButton,
+    ToggleButtonGroup,
     Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
@@ -225,8 +227,6 @@ const AddProperty = () => {
             setWalletConnected(true);
             setConnected(true);
             setWalletAddress(accounts[0]);
-
-
         } catch {
             console.log("error");
         }
@@ -308,6 +308,13 @@ const AddProperty = () => {
                             onChange={(e) => setAddress(e.target.value)}
                             required
                         />
+                        <ToggleButtonGroup
+                            value={option}
+                            onChange={(e) => setOption(e.target.value)}
+                        >
+                            <ToggleButton value="Sell">Sell</ToggleButton>
+                            <ToggleButton value="Rent">Rent</ToggleButton>
+                        </ToggleButtonGroup>
 
                         <div
                             style={{
