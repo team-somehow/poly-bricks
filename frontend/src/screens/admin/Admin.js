@@ -1,21 +1,13 @@
 import {
-    Avatar,
     Box,
-    Container,
-    List,
-    ListItemAvatar,
     Typography,
     ListItem,
     ListItemText,
-    Divider,
-    Card,
-    Button,
     Paper,
     Grid,
     ListItemIcon,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ApprovalIcon from "@mui/icons-material/Approval";
 import RequestListItem from "../../components/admin/RequestListItem";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
