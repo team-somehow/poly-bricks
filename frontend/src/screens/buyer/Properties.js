@@ -7,11 +7,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import SearchInput from "../../components/property/SearchInput";
 import { useAuth } from "@arcana/auth-react";
+import PowerSearch from "../../components/PowerSearch";
 
 const Properties = () => {
     const [data, setData] = useState([]);
     const [tempData, setTempData] = useState([]);
-    const auth=useAuth()
+    const auth = useAuth();
 
     useEffect(() => {
         const getProperties = async () => {
@@ -34,16 +35,45 @@ const Properties = () => {
         };
         getProperties();
     }, [auth]);
-    const updateProperties = (e) => {
-        const searchQuery = e.target.value;
-        if (searchQuery.trim().length == 0) setData(tempData);
-        else
-            setData(
-                tempData.filter((element) => element.name.includes(searchQuery))
+    // const updateProperties = (e) => {
+    //     const searchQuery = e.target.value;
+    //     if (searchQuery.trim().length == 0) setData(tempData);
+    //     else
+    //         setData(
+    //             tempData.filter((element) => element.name.includes(searchQuery))
+    //         );
+    // };
+    const filterProperties = (searchText, minPrice, maxPrice) => {
+        let filteredData = [];
+        if (searchText.trim().length == 0 && maxPrice == 0 && minPrice == 0)
+            return setData(tempData);
+        if (searchText.trim().length != 0)
+            filteredData = tempData.filter((element) =>
+                element.name.includes(searchText)
             );
+        if (minPrice)
+            filteredData = filteredData.filter((e) => e.price > minPrice);
+        if (maxPrice)
+            filteredData = filteredData.filter((e) => e.price < maxPrice);
+        setData(filteredData);
     };
     return (
-        <Box m={2} style={{marginTop: "3%"}}>
+        <Box m={2} style={{ marginTop: "3%" }}>
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: "280px",
+                    zIndex: -2,
+                    background: 'url("/assets/hero-city.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                    width: "100vw",
+                    minHeight: "80vh",
+                }}
+            ></Box>
             <Box
                 ccomponent={Paper}
                 sx={{
@@ -58,7 +88,8 @@ const Properties = () => {
             >
                 <Typography variant="h4">Availabe Properties</Typography>
             </Box>
-            <SearchInput updateProperties={updateProperties} />
+            {/* <SearchInput updateProperties={updateProperties} /> */}
+            <PowerSearch onSearch={filterProperties} />
             <Box
                 width={"76vw"}
                 sx={{
