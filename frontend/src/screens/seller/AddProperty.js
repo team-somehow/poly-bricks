@@ -7,12 +7,12 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { addDoc, collection } from "firebase/firestore";
-import { db, auth } from "../../config/firebase";
+import { db } from "../../config/firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -22,8 +22,26 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
+import { AuthProvider, CHAIN } from "@arcana/auth";
+
+import { provider }  from "../../index";
 const storage = getStorage();
 const filter = createFilterOptions();
+
+
+// const appID = "15228f3413342e43873a94d2ce54df3bb36b39f2";
+// const auth = new AuthProvider(appID, {
+//     network: "testnet", //defaults to 'testnet'
+//     position: "right", //defaults to right
+//     theme: "dark", //defaults to dark
+//     alwaysVisible: true, //defaults to true which is Full UI mode
+//     chainConfig: {
+//         chainId: CHAIN.POLYGON_MUMBAI_TESTNET, //defaults to CHAIN.ETHEREUM_MAINNET
+//         rpcUrl: "https://polygon-rpc.com", //defaults to 'https://rpc.ankr.com/eth'
+//     },
+// });
+
+
 
 const names = [
     "football",
@@ -51,7 +69,11 @@ const MenuProps = {
 };
 
 const AddProperty = () => {
-    const user = auth.currentUser;
+
+
+   
+
+
     const navigate = useNavigate();
 
     const [submitted, setSubmitted] = useState(false);
@@ -146,7 +168,7 @@ const AddProperty = () => {
                     verified: false,
                 },
                 images: [imageurl],
-                ownerId: auth.currentUser.uid,
+                // ownerId: auth.currentUser.uid,
                 authorize: false,
                 sellerWalletAddress: walletAddress,
                 authorizeToSell: false,
@@ -189,15 +211,30 @@ const AddProperty = () => {
         }
         setLoading(false);
     };
-    const handleConnect = () => {
-        window.ethereum
-            .request({ method: "eth_requestAccounts" })
-            .then((res) => {
-                // console.log(res);
-                setWalletConnected(true);
-                setConnected(true);
-                setWalletAddress(res[0]);
-            });
+    const handleConnect = async() => {
+        // window.ethereum
+        //     .request({ method: "eth_requestAccounts" })
+        //     .then((res) => {
+        //         // console.log(res);
+        //         setWalletConnected(true);
+        //         setConnected(true);
+        //         setWalletAddress(res[0]);
+        //     });
+
+        try{
+
+            await provider.init()
+            await provider.connect()
+            const accounts=await provider.provider.request({method:'eth_accounts'})
+            setWalletConnected(true)
+            setConnected(true)
+            setWalletAddress(accounts[0])
+    
+            console.log(accounts)
+        }
+        catch{
+            console.log("error")
+        }
     };
 
     return (

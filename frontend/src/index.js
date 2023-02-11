@@ -9,7 +9,7 @@ import { ProvideAuth } from "@arcana/auth-react";
 const appID = "15228f3413342e43873a94d2ce54df3bb36b39f2";
 const provider = new AuthProvider(appID, {
     network: "testnet", //defaults to 'testnet'
-    position: "left", //defaults to right
+    position: "right", //defaults to right
     theme: "dark", //defaults to dark
     alwaysVisible: true, //defaults to true which is Full UI mode
     chainConfig: {
@@ -18,6 +18,9 @@ const provider = new AuthProvider(appID, {
     },
 });
 
+export {
+    provider
+}
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <ProvideAuth provider={provider}>
