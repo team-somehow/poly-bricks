@@ -29,6 +29,13 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
     // to maintain seller address
     mapping(uint256 => address payable) public tokenIdToSellerPayableAddress;
 
+    // rent 
+    mapping(uint256 => uint256) public depositAmount;
+    mapping(uint256 => uint256) public monthlyRentAmount;
+
+    // renter address
+    mapping(uint256 => address payable) public tokenIdToRenterPayableAddress;
+
 
     function mintNFT(address recipient, string memory ipfsTitleDeedURI, string memory propertyId) public onlyOwner returns (uint256) {
         require(!isContentOwned(ipfsTitleDeedURI), "NFT already minted");
@@ -121,6 +128,25 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
         uint256 transferAmt = propertyPrice[tokenId];
         sellerPayableAddress.transfer(transferAmt);
     }
+
+    // RENT 
+
+    // record deposit and monthly rent given by seller
+    function listPropertyForRent(uint256 tokenId, uint256 _depositAmount, uint256 _monthlyRentAmount) {
+        require(_isApprovedOrOwner(msg.sender, tokenId), "only owner of NFT can list property for rent");
+        depositAmount[tokenId] = _depositAmount;
+        monthlyRentAmount[tokenId] = _monthlyRentAmount;
+    }
+
+    // pay rent + deposit
+    // buyerPayRentAndDeposit
+    function buyerPayRentAndDeposit(uint256 tokenId, address payable userPayableAddress) public payable {
+        require( msg.value >= depositAmount[tokenId] + monthlyRentAmount[tokenId], "please deposit correct amount");
+
+        tokenIdToRenterPayableAddress[msg.sender] = userPayableAddress;
+    }
+
+    
 
     // util override 
     function safeTransferFrom(address from, address to, uint256 tokenId) override(ERC721) public  {
