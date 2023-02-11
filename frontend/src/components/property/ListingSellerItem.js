@@ -2,7 +2,6 @@ import {
     Box,
     Button,
     Divider,
-    Grid,
     Paper,
     TextField,
     ToggleButton,
@@ -10,16 +9,14 @@ import {
     Typography,
 } from "@mui/material";
 import { Contract, ethers, providers } from "ethers";
-import BigNumber from "bignumber.js";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { contractAddress } from "../../constants";
 import PolyBricks from "../../artifacts/contracts/PolyBricks.sol/PolyBricks.json";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CustomizedDialogs from "../admin/DialogBox";
 
 import { db } from "../../config/firebase";
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { arcanaProvider } from "../../index";
 
 const ListingSellerItem = (props) => {
@@ -338,7 +335,7 @@ const ListingSellerItem = (props) => {
                                 value={token}
                                 onChange={(e) => setToken(e.target.value)}
                                 label={`${
-                                    type === "sell" ? "Monthly Rent" : "Token"
+                                    type !== "Sell" ? "Monthly Rent" : "Token"
                                 }`}
                                 sx={{
                                     marginBottom: "14px",
@@ -350,7 +347,7 @@ const ListingSellerItem = (props) => {
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                                 label={`${
-                                    type === "sell"
+                                    type !== "Sell"
                                         ? "Deposit"
                                         : "Selling Price"
                                 }`}

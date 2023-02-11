@@ -1,5 +1,4 @@
 import React from "react";
-import { auth } from "../../config/firebase";
 import { Box, Typography, Paper } from "@mui/material";
 import ListingMyItem from "../../components/property/ListingMyItem";
 import { db } from "../../config/firebase.js";
@@ -11,8 +10,7 @@ import { useAuth } from "@arcana/auth-react";
 const MyProperties = () => {
     const [data, setData] = useState([]);
     const [tempData, setTempData] = useState([]);
-    const auth=useAuth();
-
+    const auth = useAuth();
 
     useEffect(() => {
         console.log(auth.user.publicKey);
@@ -60,7 +58,7 @@ const MyProperties = () => {
             );
     };
     return (
-        <Box m={2} style={{marginTop: "3%"}}>
+        <Box m={2} style={{ marginTop: "3%" }}>
             <Box
                 component={Paper}
                 sx={{
