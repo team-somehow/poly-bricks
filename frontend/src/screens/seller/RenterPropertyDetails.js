@@ -1,13 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Box, Typography, Paper } from "@mui/material";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import ListingSellerItem from "../../components/property/ListingSellerItem";
-import CustomizedDialogs from "../../components/admin/DialogBox";
 import { useAuth } from "@arcana/auth-react";
 
-function SellerPropertyDetails() {
+function RenterPropertyDetails() {
     const [data, setData] = useState([]);
     const auth = useAuth();
 
@@ -22,7 +21,7 @@ function SellerPropertyDetails() {
 
                 if (
                     temp.ownerId === auth.user.publicKey &&
-                    temp.type === "Sell"
+                    temp.type === "Rent"
                 ) {
                     tData.push({ ...doc.data(), id: doc.id });
                 }
@@ -47,7 +46,9 @@ function SellerPropertyDetails() {
                     height: "9vh",
                 }}
             >
-                <Typography variant="h4">My Property Listings</Typography>
+                <Typography variant="h4">
+                    My Property Listings For Rent
+                </Typography>
             </Box>
             <Box
                 width={"100%"}
@@ -68,4 +69,4 @@ function SellerPropertyDetails() {
     );
 }
 
-export default SellerPropertyDetails;
+export default RenterPropertyDetails;

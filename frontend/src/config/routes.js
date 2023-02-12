@@ -17,6 +17,7 @@ import Chat from "../screens/Chat";
 import AllChats from "../screens/AllChat";
 import ErrorPage from "../screens/ErrorPage";
 import MyRentals from "../screens/buyer/MyRentals";
+import RenterPropertyDetails from "../screens/seller/RenterPropertyDetails";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,11 @@ const router = createBrowserRouter([
                 path: "/seller/my",
                 exact: true,
                 element: <SellerPropertyDetails />,
+            },
+            {
+                path: "/seller/my-rentals",
+                exact: true,
+                element: <RenterPropertyDetails />,
             },
         ],
     },

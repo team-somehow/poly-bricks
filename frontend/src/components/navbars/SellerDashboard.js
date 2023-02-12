@@ -75,6 +75,12 @@ const SellerDashboard = (props) => {
                         isActive={currentRoute === "/seller/my"}
                     />
                     <NavLink
+                        text={"My Rent Listings"}
+                        icon={<ApartmentIcon />}
+                        onClickNavigateTo="/seller/my-rentals"
+                        isActive={currentRoute === "/seller/my-rentals"}
+                    />
+                    <NavLink
                         text={"My Chats"}
                         icon={<ChatIcon />}
                         onClickNavigateTo="/chat"
