@@ -75,12 +75,6 @@ const DashboardNavbar = (props) => {
                         onClickNavigateTo="/buyer/my-rentals"
                         isActive={currentRoute === "/buyer/my-rentals"}
                     />
-                    <NavLink
-                        text={"Messages"}
-                        icon={<ChatIcon />}
-                        onClickNavigateTo="/chat"
-                        isActive={currentRoute === "/chat"}
-                    />
                 </List>
                 <Box
                     position={"absolute"}

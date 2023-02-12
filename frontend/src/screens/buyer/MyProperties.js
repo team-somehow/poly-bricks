@@ -9,7 +9,6 @@ import { useAuth } from "@arcana/auth-react";
 import PowerSearch from "../../components/PowerSearch";
 
 const MyProperties = () => {
-    
     const [data, setData] = useState([]);
     const [tempData, setTempData] = useState([]);
     const auth = useAuth();
@@ -83,6 +82,7 @@ const MyProperties = () => {
                     left: "280px",
                     zIndex: -2,
                     background: 'url("/assets/bg3.jpg")',
+                    filter: "brightness(50%)",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center center",
                     backgroundSize: "cover",

@@ -80,12 +80,6 @@ const SellerDashboard = (props) => {
                         onClickNavigateTo="/seller/my-rentals"
                         isActive={currentRoute === "/seller/my-rentals"}
                     />
-                    <NavLink
-                        text={"My Chats"}
-                        icon={<ChatIcon />}
-                        onClickNavigateTo="/chat"
-                        isActive={currentRoute === "/chat"}
-                    />
                 </List>
                 <Box
                     position={"absolute"}

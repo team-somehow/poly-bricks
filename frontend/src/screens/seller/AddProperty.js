@@ -115,7 +115,11 @@ const AddProperty = () => {
     const [amenities, setAmenities] = React.useState([]);
 
     const upload = async () => {
-        PushMessage('0x9A07653102A6c4Bd0dd06eFB4E69CfAf3AF7Ca2e',`${name} up for approval`,`Check Admin Panel`);
+        PushMessage(
+            "0x9A07653102A6c4Bd0dd06eFB4E69CfAf3AF7Ca2e",
+            `${name} up for approval`,
+            `Check Admin Panel`
+        );
 
         if (
             name.trim().length == 0 ||
@@ -174,7 +178,7 @@ const AddProperty = () => {
                 authorizeToSell: false,
                 alreadySold: false,
                 purchaseRequests: [],
-                rentRequests:[]
+                rentRequests: [],
             };
 
             await addDoc(collection(db, "ListedProperties"), data);
@@ -239,6 +243,22 @@ const AddProperty = () => {
     return (
         <Box width={"80%"}>
             <Box
+                sx={{
+                    position: "fixed",
+                    top: 0,
+                    left: "280px",
+                    zIndex: -10,
+                    background: 'url("/assets/bg7.png")',
+                    filter: "brightness(40%)",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                    width: "calc(100% - 280px)",
+                    minHeight: "100vh",
+                }}
+            ></Box>
+            <Box
                 component={Paper}
                 sx={{
                     // height: "10vh",
@@ -260,7 +280,18 @@ const AddProperty = () => {
             >
                 <Typography variant="h4">List A Property</Typography>
             </Box>
-            <Box p={5} display="flex" mt={"10vh"}>
+            <Box
+                p={5}
+                display="flex"
+                width="95%"
+                sx={{
+                    margin: "auto",
+                    mt: "10vh",
+                    pt: 8,
+                    background: "white",
+                    borderRadius: "10px",
+                }}
+            >
                 <Box width={"100%"} mr={10}>
                     <Box display={errorMessage ? "block" : "none"}>
                         <Alert
@@ -493,6 +524,7 @@ const AddProperty = () => {
                     </Button>
                 </Box>
             </Box>
+            <Box height={"10vh"}></Box>
         </Box>
     );
 };
