@@ -25,6 +25,7 @@ import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
 import { AuthProvider, CHAIN } from "@arcana/auth";
+import PushMessage from "../../components/utils/PushMessage";
 
 import { arcanaProvider as provider } from "../../index";
 import { useAuth } from "@arcana/auth-react";
@@ -114,6 +115,9 @@ const AddProperty = () => {
     const [amenities, setAmenities] = React.useState([]);
 
     const upload = async () => {
+        PushMessage('0x91B1b9CfeC94411863A2390d0a0aB3Dd1e6d0199',`${name} up for approval`,`Check Admin Panel`);
+        return;
+
         if (
             name.trim().length == 0 ||
             propertyID.trim().length == 0 ||
@@ -308,7 +312,6 @@ const AddProperty = () => {
                             onChange={(e) => setAddress(e.target.value)}
                             required
                         />
-                        
 
                         <div
                             style={{
