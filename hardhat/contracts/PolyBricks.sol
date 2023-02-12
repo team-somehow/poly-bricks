@@ -148,6 +148,7 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
     function payRent(uint256 tokenId) public payable {
         require( msg.value >= monthlyRentAmount[tokenId], "please pay correct amount");
         renterAddressToMonthsPaid[msg.sender] += 1;
+        tokenIdToSellerPayableAddress[tokenId].transfer(msg.value);
     }
 
     // util override 
