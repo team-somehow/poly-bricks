@@ -9,11 +9,13 @@ import { useAuth } from "@arcana/auth-react";
 import PowerSearch from "../../components/PowerSearch";
 
 const MyProperties = () => {
+    
     const [data, setData] = useState([]);
     const [tempData, setTempData] = useState([]);
     const auth = useAuth();
 
     useEffect(() => {
+        if (!auth.user) return;
         console.log(auth.user.publicKey);
         const getProperties = async () => {
             const snapshot = await getDocs(collection(db, "ListedProperties"));
