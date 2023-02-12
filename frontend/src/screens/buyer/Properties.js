@@ -89,7 +89,10 @@ const Properties = () => {
                 <Typography variant="h4">Availabe Properties</Typography>
             </Box> */}
             {/* <SearchInput updateProperties={updateProperties} /> */}
-            <PowerSearch onSearch={filterProperties} />
+            <PowerSearch
+                onSearch={filterProperties}
+                title="Availabe Properties"
+            />
             <Box
                 width={"76vw"}
                 sx={{

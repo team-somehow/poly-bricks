@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, InputBase, Paper, Typography } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
-function PowerSearch({ onSearch }) {
+function PowerSearch({ onSearch, title }) {
     const [isRent, setIsRent] = useState(false);
     const [searchText, setSearchText] = useState("");
     const [minPrice, setMinPrice] = useState(0);
@@ -21,7 +21,7 @@ function PowerSearch({ onSearch }) {
                 my: 4,
             }}
         >
-            <Typography variant="h2">Availabe Properties</Typography>
+            <Typography variant="h2">{title}</Typography>
 
             <Box
                 sx={{

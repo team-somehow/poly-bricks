@@ -6,6 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import SearchInput from "../../components/property/SearchInput";
 import { useAuth } from "@arcana/auth-react";
+import PowerSearch from "../../components/PowerSearch";
 
 const MyProperties = () => {
     const [data, setData] = useState([]);
@@ -49,17 +50,46 @@ const MyProperties = () => {
         };
         getProperties();
     }, [auth]);
-    const updateProperties = (e) => {
-        const searchQuery = e.target.value;
-        if (searchQuery.trim().length == 0) setData(tempData);
-        else
-            setData(
-                tempData.filter((element) => element.name.includes(searchQuery))
+    // const updateProperties = (e) => {
+    //     const searchQuery = e.target.value;
+    //     if (searchQuery.trim().length == 0) setData(tempData);
+    //     else
+    //         setData(
+    //             tempData.filter((element) => element.name.includes(searchQuery))
+    //         );
+    // };
+    const filterProperties = (searchText, minPrice, maxPrice) => {
+        let filteredData = [];
+        if (searchText.trim().length == 0 && maxPrice == 0 && minPrice == 0)
+            return setData(tempData);
+        if (searchText.trim().length != 0)
+            filteredData = tempData.filter((element) =>
+                element.name.toLowerCase().includes(searchText.toLowerCase())
             );
+        if (minPrice)
+            filteredData = filteredData.filter((e) => e.price > minPrice);
+        if (maxPrice)
+            filteredData = filteredData.filter((e) => e.price < maxPrice);
+        setData(filteredData);
     };
     return (
         <Box m={2} style={{ marginTop: "3%" }}>
             <Box
+                sx={{
+                    position: "fixed",
+                    top: 0,
+                    left: "280px",
+                    zIndex: -2,
+                    background: 'url("/assets/bg3.jpg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                    width: "calc(100% - 280px)",
+                    minHeight: "100vh",
+                }}
+            ></Box>
+            {/* <Box
                 component={Paper}
                 sx={{
                     width: "95%",
@@ -72,8 +102,9 @@ const MyProperties = () => {
                 }}
             >
                 <Typography variant="h4">My Properties</Typography>
-            </Box>
-            <SearchInput updateProperties={updateProperties} />
+            </Box> */}
+            <PowerSearch onSearch={filterProperties} title="My Properties" />
+            {/* <SearchInput updateProperties={updateProperties} /> */}
             <Box
                 width={"76vw"}
                 sx={{

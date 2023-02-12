@@ -36,6 +36,21 @@ function SellerPropertyDetails() {
     return (
         <Box m={5} width={"100%"}>
             <Box
+                sx={{
+                    position: "fixed",
+                    top: 0,
+                    left: "290px",
+                    zIndex: -2,
+                    background: 'url("/assets/bg4.jpg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                    width: "calc(100% - 290px)",
+                    minHeight: "100vh",
+                }}
+            ></Box>
+            <Box
                 component={Paper}
                 sx={{
                     width: "95%",
