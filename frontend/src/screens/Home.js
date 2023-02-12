@@ -21,72 +21,84 @@ const Home = (props) => {
                     height: "100vh",
                     position: "relative",
                 }}
-                className="awesome-bg-0"
+                // className="awesome-bg-0"
             >
                 <Navbar />
                 <Box
                     sx={{
-                        margin: 2,
-                        maxWidth: "50%",
                         position: "absolute",
-                        top: "25%",
-                        left: "5%",
-                        padding: "18px",
-                        zIndex: 3,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-evenly",
-                        alignItems: "start",
+                        top: "100px",
+                        width: "100%",
+                        height: "calc(100vh - 100px)",
+                        background:
+                            'url("/assets/background2.png") no-repeat center center',
+                        backgroundSize: "cover",
                     }}
                 >
-                    <Typography fontSize="40px" style={{ width: "100%" }}>
-                        Making Housing Affordable
-                    </Typography>
-                    <Box sx={{ my: 4 }}>
-                        <TickMark text={"Minimize Corruption"} />
-                        <TickMark text={"No Middlemen needed"} />
-                        <TickMark text={"Transperent Transactions"} />
-                        <TickMark text={"Handle Escrow Onchain"} />
-                        <TickMark text={"Seamless Transfer"} />
-                    </Box>
-                    <Box sx={{ width: "30vw", display: "flex", mt: 2 }}>
-                        <Button
-                            variant="contained"
-                            component={Link}
-                            to="/buyer/browse"
-                            fullWidth
-                            sx={{
-                                mr: 3,
-                                p: 1.8,
-                                borderRadius: 3,
-                                background:
-                                    "linear-gradient(166.88deg, #54A3FF 9.45%, #348FF9 227.32%)",
-                                boxShadow: "none",
-                                fontSize: "15px",
-                            }}
-                        >
-                            Browse Properties
-                        </Button>
-                        <Button
-                            variant="contained"
-                            component={Link}
-                            to="/seller/create"
-                            fullWidth
-                            sx={{
-                                mr: 3,
-                                p: 1.8,
-                                borderRadius: 3,
-                                background:
-                                    "linear-gradient(166.88deg, #54A3FF 9.45%, #348FF9 227.32%)",
-                                boxShadow: "none",
-                                fontSize: "15px",
-                            }}
-                        >
-                            List A Property
-                        </Button>
+                    <Box
+                        sx={{
+                            margin: 2,
+                            maxWidth: "50%",
+                            position: "absolute",
+                            top: "25%",
+                            right: "5%",
+                            padding: "18px",
+                            zIndex: 3,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-evenly",
+                            alignItems: "start",
+                        }}
+                    >
+                        <Typography fontSize="40px" style={{ width: "100%" }}>
+                            Making Housing Affordable
+                        </Typography>
+                        <Box sx={{ my: 4 }}>
+                            <TickMark text={"Minimize Corruption"} />
+                            <TickMark text={"No Middlemen needed"} />
+                            <TickMark text={"Transperent Transactions"} />
+                            <TickMark text={"Handle Escrow Onchain"} />
+                            <TickMark text={"Seamless Transfer"} />
+                        </Box>
+                        <Box sx={{ width: "30vw", display: "flex", mt: 2 }}>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/buyer/browse"
+                                fullWidth
+                                sx={{
+                                    mr: 3,
+                                    p: 1.8,
+                                    borderRadius: 3,
+                                    background:
+                                        "linear-gradient(166.88deg, #54A3FF 9.45%, #348FF9 227.32%)",
+                                    boxShadow: "none",
+                                    fontSize: "15px",
+                                }}
+                            >
+                                Browse Properties
+                            </Button>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/seller/create"
+                                fullWidth
+                                sx={{
+                                    mr: 3,
+                                    p: 1.8,
+                                    borderRadius: 3,
+                                    background:
+                                        "linear-gradient(166.88deg, #54A3FF 9.45%, #348FF9 227.32%)",
+                                    boxShadow: "none",
+                                    fontSize: "15px",
+                                }}
+                            >
+                                List A Property
+                            </Button>
+                        </Box>
                     </Box>
                 </Box>
-                <Box
+                {/* <Box
                     sx={{
                         position: "absolute",
                         top: "10vh",
@@ -104,30 +116,30 @@ const Home = (props) => {
                         }}
                         alt=""
                     />
-                </Box>
+                </Box> */}
             </Box>
-            <Box marginTop={11} paddingTop={"10px"}>
+            <Box>
                 <SpecialSection
                     heading="What problems are we solving?"
                     isOnlyImage={true}
                     imageUrl="assets/problems.png"
                 />
             </Box>
-            <Box marginTop={14} bgcolor={"#eef5f8"}>
-                <SpecialSection
+            {/* <Box marginTop={14} bgcolor={"#eef5f8"}>
+               <SpecialSection
                     backgroundColor="#eef5f8"
                     heading="Property Selection Process"
                     imageUrl={"/assets/property_selection.svg"}
                     isOnlyImage
-                />
-            </Box>
-            <SpecialSection
+                /> 
+            </Box> */}
+            {/* <SpecialSection
                 backgroundColor="#fdf9fb"
                 heading="Property Selling Process"
                 imageUrl={"/assets/property_selling.svg"}
                 isOnlyImage
-            />
-            <SpecialSection
+            /> */}
+            {/* <SpecialSection
                 heading="Industrial Applications"
                 backgroundColor="#eef5f8"
                 pointsList={[
@@ -137,8 +149,8 @@ const Home = (props) => {
                 imageUrl="https://media2.giphy.com/media/U22HxRRRXQDHrRwxz7/giphy.gif?cid=790b761128ae72216af0c92cd2b5d03ec12e4192a263eb3a&rid=giphy.gif&ct=s"
                 // imageUrl="https://media1.giphy.com/media/4E5RAy2GhY4Lc84IMi/giphy.gif?cid=ecf05e47yw86f3c7su5uqmkrmz29jt4rq985bsroevfip1b9&rid=giphy.gif&ct=s"
                 reverse={true}
-            />
-            <SpecialSection
+            /> */}
+            {/* <SpecialSection
                 heading="Security Features"
                 backgroundColor="#fdf9fb"
                 pointsList={[
@@ -147,8 +159,8 @@ const Home = (props) => {
                     "Use of escrow mechanism in smart contract to ensure that the payment is released only after the successful transfer of property ownership",
                 ]}
                 imageUrl="https://media4.giphy.com/media/IzLOkxWYZJQacKuUFn/giphy.gif?cid=790b7611f105d87d1f829218228d79a482783225ae95def7&rid=giphy.gif&ct=s"
-            />
-            <SpecialSection
+            /> */}
+            {/* <SpecialSection
                 backgroundColor="#fefbef"
                 heading="Powered by Polygon"
                 pointsList={[
@@ -157,7 +169,7 @@ const Home = (props) => {
                 ]}
                 imageUrl="assets/polygon.png"
                 reverse={true}
-            />
+            /> */}
             <Box height={"10vh"}></Box>
         </>
     );

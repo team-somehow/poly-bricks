@@ -21,7 +21,7 @@ function PowerSearch({ onSearch }) {
                 my: 4,
             }}
         >
-            <Typography variant="h2">Find new place for Rent/Buy</Typography>
+            <Typography variant="h2">Availabe Properties</Typography>
 
             <Box
                 sx={{
