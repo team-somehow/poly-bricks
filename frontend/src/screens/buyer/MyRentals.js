@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Paper } from "@mui/material";
-import ListingMyItem from "../../components/property/ListingMyItem";
+import ListingMyRental from "../../components/property/ListingMyRental";
 import { db } from "../../config/firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -84,8 +84,8 @@ const MyRentals = () => {
             >
                 {data.map((item) => (
                     <div key={item.id}>
-                        {/* <ListingMyItem {...item} key={item.id} /> */}
-                        {JSON.stringify(item)}
+                        <ListingMyRental {...item} key={item.id} />
+                        {/* {JSON.stringify(item)} */}
                     </div>
                 ))}
             </Box>
