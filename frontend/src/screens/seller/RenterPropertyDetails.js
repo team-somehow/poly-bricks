@@ -5,6 +5,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import ListingSellerItem from "../../components/property/ListingSellerItem";
 import { useAuth } from "@arcana/auth-react";
+import ListingRenterItem from "../../components/property/ListingRenterItem";
 
 function RenterPropertyDetails() {
     const [data, setData] = useState([]);
@@ -62,7 +63,7 @@ function RenterPropertyDetails() {
                 }}
             >
                 {data.map((item) => (
-                    <ListingSellerItem key={item.id} {...item} />
+                    <ListingRenterItem key={item.id} {...item} />
                 ))}
             </Box>
         </Box>
