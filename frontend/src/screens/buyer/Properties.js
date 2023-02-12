@@ -49,7 +49,7 @@ const Properties = () => {
             return setData(tempData);
         if (searchText.trim().length != 0)
             filteredData = tempData.filter((element) =>
-                element.name.includes(searchText)
+                element.name.toLowerCase().includes(searchText.toLowerCase())
             );
         if (minPrice)
             filteredData = filteredData.filter((e) => e.price > minPrice);
@@ -61,7 +61,7 @@ const Properties = () => {
         <Box m={2} style={{ marginTop: "3%" }}>
             <Box
                 sx={{
-                    position: "absolute",
+                    position: "fixed",
                     top: 0,
                     left: "280px",
                     zIndex: -2,
@@ -70,11 +70,11 @@ const Properties = () => {
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
                     backgroundAttachment: "fixed",
-                    width: "100vw",
-                    minHeight: "80vh",
+                    width: "calc(100% - 280px)",
+                    minHeight: "100vh",
                 }}
             ></Box>
-            <Box
+            {/* <Box
                 ccomponent={Paper}
                 sx={{
                     width: "95%",
@@ -87,7 +87,7 @@ const Properties = () => {
                 }}
             >
                 <Typography variant="h4">Availabe Properties</Typography>
-            </Box>
+            </Box> */}
             {/* <SearchInput updateProperties={updateProperties} /> */}
             <PowerSearch onSearch={filterProperties} />
             <Box

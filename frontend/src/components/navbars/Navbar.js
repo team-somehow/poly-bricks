@@ -80,8 +80,7 @@ function Navbar() {
     return (
         <AppBar
             style={{
-                background: "transparent",
-                boxShadow: "none",
+                background: "white",
             }}
             position={yScroll === 0 ? "static" : "fixed"}
             elevation={0}
@@ -221,11 +220,12 @@ function Navbar() {
                                     key={page.text}
                                     onClick={handleCloseNavMenu}
                                     sx={{
+                                        px: 2,
                                         my: 2,
                                         mx: 3,
                                         display: "block",
                                     }}
-                                    variant="outlined"
+                                    variant="text"
                                     color="info"
                                     size="large"
                                 >
