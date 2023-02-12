@@ -130,7 +130,7 @@ const ListingItem = (props) => {
                 m={1}
             >
                 {
-                    (auth.user.publicKey !== ownerId,
+                    (auth?.user && auth.user.publicKey !== ownerId,
                     price,
                     downPaymentPrice && (
                         <>
@@ -153,9 +153,9 @@ const ListingItem = (props) => {
                                     disableFocusRipple={true}
                                     size="large"
                                     fullWidth
-                                    disabled={auth.user.publicKey === ownerId}
+                                    disabled={auth?.user && auth.user.publicKey === ownerId}
                                 >
-                                    {auth.user.publicKey !== ownerId
+                                    {auth?.user &&  auth.user.publicKey !== ownerId
                                         ? `Waiting For Approval`
                                         : `You own the property`}
                                 </Button>
@@ -164,7 +164,7 @@ const ListingItem = (props) => {
                     ))
                 }
                 <Box>
-                    {!paymentMade && auth.user.publicKey !== ownerId && (
+                    {auth?.user && !paymentMade && auth?.user?.publicKey !== ownerId && (
                         <>
                             {maiKhareedSakta && (
                                 <Button

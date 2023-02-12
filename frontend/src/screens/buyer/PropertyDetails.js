@@ -35,7 +35,7 @@ const PropertyDetails = () => {
         ownerId,
         purchaseRequests,
         type,
-        rentRequests
+        rentRequests,
     } = data;
 
     // const { enqueueSnackbar } = useSnackbar();
@@ -44,12 +44,12 @@ const PropertyDetails = () => {
     let map_image = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+555555(${seller_long},${seller_lat})/${seller_long},${seller_lat},15,0/300x200@2x?access_token=pk.eyJ1IjoibWJtcGgiLCJhIjoiY2tya2F0OTJvMGk1YjJwbGZ1bDJ1eGU0dCJ9.fLJp01SsIpdhGmWdBzaSnQ`;
 
     const [allowRequestPurchase, setAllowRequestPurchase] = useState(false);
-    const [allowRequestRent,setAllowRequestRent]=useState(false)
+    const [allowRequestRent, setAllowRequestRent] = useState(false);
     const [walletAddress, setWalletAddress] = useState(null);
 
     useEffect(() => {
         handleConnect();
-    }, []);
+    }, [auth]);
 
     useEffect(() => {
         console.log(propertyID);
@@ -135,7 +135,6 @@ const PropertyDetails = () => {
     };
 
     const applyForRent = async () => {
-
         const propertyRef = doc(db, "ListedProperties", id);
 
         await updateDoc(propertyRef, {
@@ -146,16 +145,17 @@ const PropertyDetails = () => {
                 approved: false,
             }),
         });
-        setAllowRequestRent(false)
+        setAllowRequestRent(false);
     };
 
     const handleConnect = async () => {
-        await provider.init();
-        await provider.connect();
-        const accounts = await provider.provider.request({
-            method: "eth_accounts",
-        });
-        setWalletAddress(accounts[0]);
+        // await provider.init();
+        // await provider.connect();
+        // const accounts = await provider.provider.request({
+        //     method: "eth_accounts",
+        // });
+        // setWalletAddress(accounts[0]);
+        setWalletAddress(auth?.user?.address || "");
     };
 
     if (
@@ -238,7 +238,8 @@ const PropertyDetails = () => {
 
                             {auth?.user &&
                                 ownerId !== auth.user.publicKey &&
-                                allowRequestPurchase && type==="Sell" && (
+                                allowRequestPurchase &&
+                                type === "Sell" && (
                                     <Button
                                         variant="contained"
                                         onClick={makeDeposit}
@@ -248,9 +249,10 @@ const PropertyDetails = () => {
                                         Request Purchase
                                     </Button>
                                 )}
-                                {auth?.user &&
+                            {auth?.user &&
                                 ownerId !== auth.user.publicKey &&
-                                allowRequestRent && type==="Rent" && (
+                                allowRequestRent &&
+                                type === "Rent" && (
                                     <Button
                                         variant="contained"
                                         onClick={applyForRent}
