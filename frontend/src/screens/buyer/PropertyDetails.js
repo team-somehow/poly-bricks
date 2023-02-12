@@ -10,7 +10,7 @@ import { contractAddress } from "../../constants";
 import PolyBricks from "../../artifacts/contracts/PolyBricks.sol/PolyBricks.json";
 import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
-import { useSnackbar } from "notistack";
+// import { useSnackbar } from "notistack";
 import { useAuth } from "@arcana/auth-react";
 import { arcanaProvider } from "../../index";
 
@@ -34,14 +34,17 @@ const PropertyDetails = () => {
         amenities,
         ownerId,
         purchaseRequests,
+        type,
+        rentRequests
     } = data;
 
-    const { enqueueSnackbar } = useSnackbar();
+    // const { enqueueSnackbar } = useSnackbar();
     let seller_long = "72.88800325961361",
         seller_lat = "19.068371276850556";
     let map_image = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+555555(${seller_long},${seller_lat})/${seller_long},${seller_lat},15,0/300x200@2x?access_token=pk.eyJ1IjoibWJtcGgiLCJhIjoiY2tya2F0OTJvMGk1YjJwbGZ1bDJ1eGU0dCJ9.fLJp01SsIpdhGmWdBzaSnQ`;
 
     const [allowRequestPurchase, setAllowRequestPurchase] = useState(false);
+    const [allowRequestRent,setAllowRequestRent]=useState(false)
     const [walletAddress, setWalletAddress] = useState(null);
 
     useEffect(() => {
@@ -70,6 +73,17 @@ const PropertyDetails = () => {
             }
         });
     }, [purchaseRequests, auth]);
+
+    useEffect(() => {
+        setAllowRequestRent(true);
+
+        if (!rentRequests) return;
+        rentRequests.forEach((request) => {
+            if (request.uid === auth.user.publicKey) {
+                setAllowRequestRent(false);
+            }
+        });
+    }, [rentRequests, auth]);
 
     const makeDeposit = async () => {
         const tokenId = data.tokenID;
@@ -109,15 +123,30 @@ const PropertyDetails = () => {
                     }),
                 });
 
-                enqueueSnackbar("Purchase Made", {
-                    variant: "success",
-                });
+                // enqueueSnackbar("Purchase Made", {
+                //     variant: "success",
+                // });
 
                 setAllowRequestPurchase(false);
 
                 // console.log("result", result);
             }
         }
+    };
+
+    const applyForRent = async () => {
+
+        const propertyRef = doc(db, "ListedProperties", id);
+
+        await updateDoc(propertyRef, {
+            rentRequests: arrayUnion({
+                name: auth.user.name,
+                uid: auth.user.publicKey,
+                walletAddress: auth.user.address,
+                approved: false,
+            }),
+        });
+        setAllowRequestRent(false)
     };
 
     const handleConnect = async () => {
@@ -201,14 +230,15 @@ const PropertyDetails = () => {
                             Matic.{price}
                         </Typography>
                         <Box>
-                            {ownerId === auth.user.publicKey && (
+                            {auth?.user && ownerId === auth.user.publicKey && (
                                 <Typography>
                                     You already own this property
                                 </Typography>
                             )}
 
-                            {ownerId !== auth.user.publicKey &&
-                                allowRequestPurchase && (
+                            {auth?.user &&
+                                ownerId !== auth.user.publicKey &&
+                                allowRequestPurchase && type==="Sell" && (
                                     <Button
                                         variant="contained"
                                         onClick={makeDeposit}
@@ -216,6 +246,18 @@ const PropertyDetails = () => {
                                         sx={{ marginRight: 4 }}
                                     >
                                         Request Purchase
+                                    </Button>
+                                )}
+                                {auth?.user &&
+                                ownerId !== auth.user.publicKey &&
+                                allowRequestRent && type==="Rent" && (
+                                    <Button
+                                        variant="contained"
+                                        onClick={applyForRent}
+                                        disabled={loading}
+                                        sx={{ marginRight: 4 }}
+                                    >
+                                        Apply For Rent
                                     </Button>
                                 )}
 
