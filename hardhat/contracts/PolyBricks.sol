@@ -34,7 +34,7 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
     mapping(uint256 => uint256) public monthlyRentAmount;
 
     // renter address
-    mapping(uint256 => address payable) public tokenIdToRenterPayableAddress;
+    mapping(address => uint256) public renterAddressToMonthsPaid;
 
 
     function mintNFT(address recipient, string memory ipfsTitleDeedURI, string memory propertyId) public onlyOwner returns (uint256) {
@@ -140,13 +140,15 @@ contract PolyBricks is ERC721, ERC721URIStorage, Ownable {
 
     // pay rent + deposit
     // buyerPayRentAndDeposit
-    function buyerPayRentAndDeposit(uint256 tokenId, address payable userPayableAddress) public payable {
+    function buyerPayRentAndDeposit(uint256 tokenId) public payable {
         require( msg.value >= depositAmount[tokenId] + monthlyRentAmount[tokenId], "please deposit correct amount");
-
-        tokenIdToRenterPayableAddress[tokenId] = userPayableAddress;
+        renterAddressToMonthsPaid[msg.sender] += 1;
     }
 
-    
+    function payRent(uint256 tokenId) public payable {
+        require( msg.value >= monthlyRentAmount[tokenId], "please pay correct amount");
+        renterAddressToMonthsPaid[msg.sender] += 1;
+    }
 
     // util override 
     function safeTransferFrom(address from, address to, uint256 tokenId) override(ERC721) public  {

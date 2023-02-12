@@ -92,4 +92,26 @@ describe("PolyBricks", function () {
             value: ethers.utils.parseEther(propertyPrice.toString()),
         });
     });
+
+    it("lists property for rent", async () => {
+        await polyBricks
+            .connect(buyer1)
+            .listPropertyForRent(
+                tokenId,
+                ethers.utils.parseEther("10"),
+                ethers.utils.parseEther("5")
+            );
+    });
+
+    it("allows buyer to deposit amount", async () => {
+        await polyBricks.connect(buyer2).buyerPayRentAndDeposit(tokenId, {
+            value: ethers.utils.parseEther("15"),
+        });
+    });
+
+    it("allows user to pay rent", async () => {
+        await polyBricks.connect(buyer2).payRent(tokenId, {
+            value: ethers.utils.parseEther("5"),
+        });
+    });
 });
