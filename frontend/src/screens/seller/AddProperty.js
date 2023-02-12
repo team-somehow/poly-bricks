@@ -115,8 +115,7 @@ const AddProperty = () => {
     const [amenities, setAmenities] = React.useState([]);
 
     const upload = async () => {
-        PushMessage('0x91B1b9CfeC94411863A2390d0a0aB3Dd1e6d0199',`${name} up for approval`,`Check Admin Panel`);
-        return;
+        PushMessage('0x9A07653102A6c4Bd0dd06eFB4E69CfAf3AF7Ca2e',`${name} up for approval`,`Check Admin Panel`);
 
         if (
             name.trim().length == 0 ||
