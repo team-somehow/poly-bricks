@@ -174,6 +174,7 @@ const AddProperty = () => {
                 authorizeToSell: false,
                 alreadySold: false,
                 purchaseRequests: [],
+                rentRequests:[]
             };
 
             await addDoc(collection(db, "ListedProperties"), data);
