@@ -16,6 +16,7 @@ import AuthChecker from "../components/auth/AuthChecker";
 import Chat from "../screens/Chat";
 import AllChats from "../screens/AllChat";
 import ErrorPage from "../screens/ErrorPage";
+import MyRentals from "../screens/buyer/MyRentals";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,16 @@ const router = createBrowserRouter([
             {
                 path: "/buyer/browse/:propertyID",
                 element: <PropertyDetails />,
+                exact: true,
+            },
+
+            {
+                path: "/buyer/my-rentals",
+                element: (
+                    <AuthChecker>
+                        <MyRentals />
+                    </AuthChecker>
+                ),
                 exact: true,
             },
 
