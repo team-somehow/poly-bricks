@@ -19,7 +19,7 @@ function App() {
         setLoading(false);
     }, [auth]);
 
-    if (loading)
+    if (auth.loading)
         return (
             <Center>
                 <CircularProgress />

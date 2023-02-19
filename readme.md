@@ -1,0 +1,3 @@
+# Poly Bricks
+
+The problem statement highlights the difficulties and inefficiencies in the current process of buying and selling property, but it can be further expanded to include the challenges in the rental market as well. The rent feature could address issues such as the lack of transparency and trust between landlords and tenants, the high costs of intermediaries, and the time-consuming process of leasing a property. By incorporating the rent feature, the decentralized platform using Polygon and NFTs could provide a comprehensive solution for all real estate transactions, making the process of renting a property more secure, efficient, and cost-effective.

@@ -8,7 +8,10 @@ const AuthContainer = (props) => {
         <Auth
             externalWallet={true}
             theme="dark"
-            onLogin={() => navigate("/")}
+            onLogin={() => {
+                navigate("/");
+                localStorage.setItem("ye_dekh", "ho gaya");
+            }}
         ></Auth>
     );
 };
