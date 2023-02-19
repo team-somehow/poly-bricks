@@ -58,6 +58,23 @@ const MyRentals = () => {
     return (
         <Box m={2} style={{ marginTop: "3%" }}>
             <Box
+                sx={{
+                    position: "fixed",
+                    top: 0,
+                    left: "280px",
+                    zIndex: -2,
+                    background: 'url("/assets/bg5.jpg")',
+                    filter: "brightness(50%)",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    backgroundSize: "cover",
+                    filter: "brightness(40%)",
+                    backgroundAttachment: "fixed",
+                    width: "calc(100% - 280px)",
+                    minHeight: "100vh",
+                }}
+            ></Box>
+            <Box
                 component={Paper}
                 sx={{
                     width: "95%",

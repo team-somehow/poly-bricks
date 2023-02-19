@@ -66,6 +66,7 @@ const Properties = () => {
                     left: "280px",
                     zIndex: -2,
                     background: 'url("/assets/hero-city.svg")',
+                    filter: "brightness(40%)",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center center",
                     backgroundSize: "cover",
